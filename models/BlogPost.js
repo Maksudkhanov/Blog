@@ -6,3 +6,6 @@ const BlogPostSchema = new Schema({
     title: String,
     body: String
 });
+
+export const BlogPost = mongoose.model('BlogPost', BlogPostSchema)
+
