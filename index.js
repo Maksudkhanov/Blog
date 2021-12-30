@@ -1,6 +1,9 @@
 import express from 'express'
 import path from 'path'
 import ejs from 'ejs'
+import mongoose from 'mongoose'
+
+await mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true})
 
 const app = express()
 
