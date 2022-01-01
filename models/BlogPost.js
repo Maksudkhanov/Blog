@@ -9,7 +9,8 @@ const BlogPostSchema = new Schema({
     datePosted: {
         type: Date,
         default: new Date()
-    }
+    },
+    image: String
 });
 
 export const BlogPost = mongoose.model('BlogPost', BlogPostSchema)
