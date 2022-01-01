@@ -3,6 +3,7 @@ import path from 'path'
 import ejs from 'ejs'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+import fileUpload from 'express-fileupload'
 import {BlogPost} from './models/BlogPost.js'
 
 await mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true})
@@ -13,6 +14,7 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(fileUpload())
 
 app.get('/', async (req, res) => {
     const blogposts = await BlogPost.find({})
@@ -25,10 +27,13 @@ app.get('/posts/new',(req,res)=>{
     res.render('create')
 })
 
-app.post('/posts/store', async (req, res)=> {
-    console.log(req.body);
-    await BlogPost.create(req.body) 
-    res.redirect('/')
+app.post('/posts/store', (req, res)=> {
+    let image = req.files.image;
+    image.mv(path.resolve('public/img', image.name), 
+    async(err)=> {
+        await BlogPost.create(req.body) 
+        res.redirect('/')
+    })
 })
 
 app.get('/about', (req, res) => {
