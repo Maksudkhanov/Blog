@@ -6,15 +6,25 @@ import bodyParser from 'body-parser'
 import fileUpload from 'express-fileupload'
 import {BlogPost} from './models/BlogPost.js'
 
-await mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true})
+mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true})
 
 const app = express()
+const validateMiddleWare = (req, res, next) => {
+    if( req.files === null || req.body.title === null || req.body.title === null) {
+        return res.redirect('/posts/new')
+    }
+    next()
+}
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(fileUpload())
+app.use('/posts/store', validateMiddleWare)
+
+
+
 
 app.get('/', async (req, res) => {
     const blogposts = await BlogPost.find({})
