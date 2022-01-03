@@ -9,6 +9,8 @@ import { storePostController } from './controllers/storePost.js'
 import { validateMiddleWare } from './middleware/validationMiddleware.js'
 import {newUserController} from './controllers/newUser.js'
 import {storeUserController} from './controllers/storeUser.js'
+import {loginController} from './controllers/login.js'
+import {loginUserController} from './controllers/loginUser.js'
 
 mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true})
 
@@ -21,14 +23,15 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(fileUpload())
 app.use('/posts/store', validateMiddleWare)
 
-
 app.post('/posts/store', storePostController)
 app.post('/users/register', storeUserController)
+app.post('/users/login', loginUserController)
 
 app.get('/', homeController)
 app.get('/post/:id', getPostController)
-app.get('/auth/register', newUserController)
 app.get('/posts/new', newPostController)
+app.get('/auth/register', newUserController)
+app.get('/auth/login', loginController)
 
 app.listen(3000, () => {
     console.log('App listening on port 3000')
