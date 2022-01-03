@@ -30,9 +30,6 @@ app.get('/post/:id', getPostController)
 app.get('/auth/register', newUserController)
 app.get('/posts/new', newPostController)
 
-
-
-
 app.listen(3000, () => {
     console.log('App listening on port 3000')
 })

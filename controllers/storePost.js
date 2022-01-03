@@ -1,4 +1,5 @@
 import {BlogPost} from '../models/BlogPost.js'
+import path from 'path'
 
 export async function storePostController(req, res) {
     let image = req.files.image;
