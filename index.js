@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import fileUpload from 'express-fileupload'
 import expressSession from 'express-session'
+import flash from 'connect-flash'
 import {newPostController} from './controllers/newPost.js'
 import { homeController } from './controllers/home.js'
 import { getPostController } from './controllers/getPost.js'
@@ -20,8 +21,6 @@ mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true})
 
 const app = express()
 
-
-
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(bodyParser.json())
@@ -31,6 +30,7 @@ app.use('/posts/store', validateMiddleWare)
 app.use(expressSession({
     secret: 'keyboard cat'
 }))
+app.use(flash())
 
 global.loggedIn = null;
 app.use("*", (req, res, next) => {
