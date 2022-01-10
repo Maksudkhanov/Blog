@@ -6,7 +6,8 @@ export async function storePostController(req, res) {
     image.mv(path.resolve('public/img', image.name), 
     async(err)=> {
         await BlogPost.create({...req.body,
-            image: '/img/'+image.name}) 
+            image: '/img/'+image.name,
+        userid: req.session.userId}) 
         res.redirect('/')
     })
 }
